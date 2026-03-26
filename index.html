@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microsoft Copilot 講座カタログ</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700;800&display=swap');
+
+  @page { size: A4; margin: 12mm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', 'Segoe UI', sans-serif;
+    background: #f0f2f5;
+    color: #1a1a2e;
+    line-height: 1.7;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ========== ヘッダー ========== */
+  .hero {
+    position: relative;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    color: #fff;
+    padding: 56px 40px 48px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(99,102,241,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 240px; height: 240px;
+    background: radial-gradient(circle, rgba(236,72,153,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-label {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 24px;
+    padding: 6px 20px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    color: rgba(255,255,255,0.85);
+  }
+  .hero h1 {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .hero-sub {
+    font-size: 14px;
+    font-weight: 300;
+    opacity: 0.75;
+    letter-spacing: 0.5px;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 28px;
+    position: relative;
+  }
+  .hero-stat {
+    text-align: center;
+  }
+  .hero-stat-num {
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #a78bfa, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-stat-label {
+    font-size: 11px;
+    font-weight: 400;
+    opacity: 0.6;
+    margin-top: 2px;
+  }
+
+  /* ========== 凡例バー ========== */
+  .legend-bar {
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 14px 32px;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #4b5563;
+  }
+  .legend-chip {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+  .legend-chip.free { background: #10b981; }
+  .legend-chip.paid { background: #f43f5e; }
+
+  /* ========== コンテナ ========== */
+  .container {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 32px 20px 0;
+  }
+
+  /* ========== レベルヘッダー ========== */
+  .level-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    margin-top: 8px;
+  }
+  .level-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .level-icon.beginner { background: linear-gradient(135deg, #10b981, #34d399); }
+  .level-icon.intermediate { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+  .level-icon.advanced { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
+  .level-text h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+  }
+  .level-text p {
+    font-size: 12px;
+    color: #9ca3af;
+    font-weight: 400;
+  }
+
+  /* ========== コースカード ========== */
+  .course-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    margin-bottom: 32px;
+    overflow: hidden;
+    page-break-inside: avoid;
+    transition: box-shadow 0.2s;
+  }
+  .course-card:hover {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  /* カードヘッダー */
+  .card-top {
+    display: flex;
+    align-items: stretch;
+  }
+  .thumb-wrap {
+    position: relative;
+    flex-shrink: 0;
+    width: 300px;
+    overflow: hidden;
+  }
+  .thumb-wrap a {
+    display: block;
+    height: 100%;
+  }
+  .thumb-wrap img {
+    width: 100%;
+    height: 100%;
+    min-height: 168px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+  }
+  .thumb-wrap:hover img {
+    transform: scale(1.03);
+  }
+  .thumb-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 8px 14px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.5));
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    text-align: right;
+    pointer-events: none;
+  }
+
+  .card-info {
+    flex: 1;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .card-info-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .course-num {
+    background: #111827;
+    color: #fff;
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .course-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.3;
+  }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .meta-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: #6b7280;
+    font-weight: 400;
+  }
+  .meta-chip svg {
+    width: 14px; height: 14px;
+    fill: currentColor;
+    opacity: 0.5;
+  }
+
+  /* プランバッジ */
+  .plan-tag {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    margin-top: 12px;
+  }
+  .plan-tag.free {
+    background: #ecfdf5;
+    color: #059669;
+    border: 1px solid #a7f3d0;
+  }
+  .plan-tag.paid {
+    background: #fff1f2;
+    color: #e11d48;
+    border: 1px solid #fecdd3;
+  }
+  .plan-tag.mixed {
+    background: #fffbeb;
+    color: #d97706;
+    border: 1px solid #fde68a;
+  }
+
+  /* 注意バナー */
+  .notice-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 20px 0;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 500;
+  }
+  .notice-banner.paid-all {
+    background: #fff1f2;
+    color: #be123c;
+    border: 1px solid #fecdd3;
+  }
+  .notice-banner.paid-partial {
+    background: #fffbeb;
+    color: #b45309;
+    border: 1px solid #fde68a;
+  }
+  .notice-icon {
+    flex-shrink: 0;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    color: #fff;
+  }
+  .notice-banner.paid-all .notice-icon { background: #e11d48; }
+  .notice-banner.paid-partial .notice-icon { background: #d97706; }
+
+  /* ========== レクチャー一覧 ========== */
+  .lectures-wrap {
+    border-top: 1px solid #f3f4f6;
+    margin-top: 16px;
+  }
+  .section-label {
+    padding: 9px 24px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #6366f1;
+    background: #f8f7ff;
+    border-top: 1px solid #f3f4f6;
+    letter-spacing: 0.5px;
+  }
+  .section-label:first-child { border-top: none; }
+
+  .lec-link {
+    display: flex;
+    align-items: center;
+    padding: 9px 24px;
+    text-decoration: none;
+    color: #374151;
+    font-size: 13.5px;
+    border-top: 1px solid #f9fafb;
+    transition: background 0.12s;
+  }
+  .lec-link:hover {
+    background: #f0f5ff;
+  }
+  .lec-no {
+    width: 32px;
+    font-size: 11px;
+    color: #d1d5db;
+    font-weight: 600;
+    flex-shrink: 0;
+    text-align: center;
+  }
+  .lec-type {
+    width: 52px;
+    flex-shrink: 0;
+  }
+  .type-pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 6px;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .type-pill.video {
+    background: #eff6ff;
+    color: #2563eb;
+  }
+  .type-pill.test {
+    background: #f0fdf4;
+    color: #16a34a;
+  }
+  .lec-title {
+    flex: 1;
+    font-weight: 450;
+    color: #1e40af;
+    transition: color 0.12s;
+  }
+  .lec-link:hover .lec-title {
+    color: #1d4ed8;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .lec-dur {
+    width: 52px;
+    text-align: right;
+    font-size: 11.5px;
+    color: #c0c4cc;
+    font-weight: 500;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .lec-plan {
+    width: 62px;
+    text-align: right;
+    flex-shrink: 0;
+    margin-left: 6px;
+  }
+  .micro-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+  .micro-badge.free {
+    background: #ecfdf5;
+    color: #059669;
+  }
+  .micro-badge.paid {
+    background: #fff1f2;
+    color: #e11d48;
+  }
+  .lec-note {
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    color: #92400e;
+    background: #fffbeb;
+    border-radius: 4px;
+    padding: 3px 8px;
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  /* ========== フッター ========== */
+  .footer {
+    text-align: center;
+    padding: 48px 20px 40px;
+    color: #9ca3af;
+  }
+  .footer-thanks {
+    font-size: 18px;
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 8px;
+  }
+  .footer-copy {
+    font-size: 11px;
+    color: #d1d5db;
+  }
+
+  /* ========== 印刷対応 ========== */
+  @media print {
+    body { background: #fff; }
+    .legend-bar { position: static; box-shadow: none; }
+    .course-card { box-shadow: none; border: 1px solid #e5e7eb; }
+    .course-card:hover { box-shadow: none; }
+    .lec-link:hover { background: transparent; }
+    .thumb-wrap:hover img { transform: none; }
+    a { color: #2563eb !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<div class="hero">
+  <div class="hero-label">Online Learning Program</div>
+  <h1>Microsoft Copilot 講座カタログ</h1>
+  <p class="hero-sub">体系的に学べるオンライン研修プログラム</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">10</div>
+      <div class="hero-stat-label">コース</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">75</div>
+      <div class="hero-stat-label">動画レッスン</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">18</div>
+      <div class="hero-stat-label">確認テスト</div>
+    </div>
+  </div>
+</div>
+
+<!-- 凡例 -->
+<div class="legend-bar">
+  <div class="legend-item"><span class="legend-chip free"></span>無償版 - すべてのユーザーが視聴可能</div>
+  <div class="legend-item"><span class="legend-chip paid"></span>有償版 - 有償版ご契約者が視聴可能</div>
+</div>
+
+<!-- ===== 初級 ===== -->
+<div class="container">
+
+  <div class="level-header">
+    <div class="level-icon beginner">初</div>
+    <div class="level-text">
+      <h2>初級コース</h2>
+      <p>Copilotの基本操作・プロンプト・文書作成を学ぶ 3コース</p>
+    </div>
+  </div>
+
+  <!-- 1. Copilot基礎 -->
+  <div class="course-card">
+    <div class="card-top">
+      <div class="thumb-wrap">
+        <a href="https://hojin-reskilling.share-wis.com/courses/43648/lectures/445609" target="_blank">
+          <img src="images/course-01.jpg" alt="Copilot基礎">
+        </a>
+      </div>
+      <div class="card-info">
+        <div class="card-info-top">
+          <span class="course-num">1</span>
+          <span class="course-title">Copilot基礎（初級）</span>
+        </div>
+        <div class="card-meta">
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-11v4l3.5 2.1.8-1.3-2.8-1.7V7H9z"/></svg>約55分</span>
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm1 2h4v4H5V6z"/></svg>動画8本 + テスト3回</span>
+        </div>
+        <span class="plan-tag free">無償版</span>
+      </div>
+    </div>
+    <div class="lectures-wrap">
+      <div class="section-label">Copilotの基礎</div>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43648/lectures/445609" target="_blank" class="lec-link"><span class="lec-no">1</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画① - Microsoft Copilotとは</span><span class="lec-dur">6:06</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43648/lectures/445617" target="_blank" class="lec-link"><span class="lec-no">2</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画① - 初回ログイン、Copilot Chatの基本操作</span><span class="lec-dur">4:59</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43648/lectures/445618" target="_blank" class="lec-link"><span class="lec-no">3</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画② - インターフェースの詳細</span><span class="lec-dur">6:07</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43648/lectures/445634" target="_blank" class="lec-link"><span class="lec-no">4</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画③ - プロンプトギャラリーの活用</span><span class="lec-dur">3:32</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43648/lectures/445641" target="_blank" class="lec-link"><span class="lec-no">5</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画① - Copilotプランについて</span><span class="lec-dur">6:01</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43648/lectures/447300" target="_blank" class="lec-link"><span class="lec-no">6</span><span class="lec-type"><span class="type-pill test">テスト</span></span><span class="lec-title">★テスト：Microsoft Copilotとは＋Copilotプラン</span><span class="lec-dur"></span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <div class="section-label">セキュリティとプライバシー</div>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43648/lectures/445650" target="_blank" class="lec-link"><span class="lec-no">7</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画① - Copilotのセキュリティとプライバシーの基本</span><span class="lec-dur">5:19</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43648/lectures/447301" target="_blank" class="lec-link"><span class="lec-no">8</span><span class="lec-type"><span class="type-pill test">テスト</span></span><span class="lec-title">★テスト：セキュリティとプライバシー</span><span class="lec-dur"></span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <div class="section-label">モデル選択</div>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43648/lectures/445652" target="_blank" class="lec-link"><span class="lec-no">9</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画① - Copilotモデル選択（GPT5.2）との使い分け</span><span class="lec-dur">5:17</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43648/lectures/445657" target="_blank" class="lec-link"><span class="lec-no">10</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画① - CopilotGPT5.2モデル比較と実務での使い分け</span><span class="lec-dur">5:50</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43648/lectures/447302" target="_blank" class="lec-link"><span class="lec-no">11</span><span class="lec-type"><span class="type-pill test">テスト</span></span><span class="lec-title">★テスト：モデル選択</span><span class="lec-dur"></span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+    </div>
+  </div>
+
+  <!-- 2. Copilotプロンプト活用 -->
+  <div class="course-card">
+    <div class="card-top">
+      <div class="thumb-wrap">
+        <a href="https://hojin-reskilling.share-wis.com/courses/43734/lectures/445666" target="_blank">
+          <img src="images/course-02.jpg" alt="Copilotプロンプト活用">
+        </a>
+      </div>
+      <div class="card-info">
+        <div class="card-info-top">
+          <span class="course-num">2</span>
+          <span class="course-title">Copilotプロンプト活用（初級）</span>
+        </div>
+        <div class="card-meta">
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-11v4l3.5 2.1.8-1.3-2.8-1.7V7H9z"/></svg>約40分</span>
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm1 2h4v4H5V6z"/></svg>動画7本 + テスト1回</span>
+        </div>
+        <span class="plan-tag free">無償版</span>
+      </div>
+    </div>
+    <div class="lectures-wrap">
+      <div class="section-label">プロンプトと会話設計</div>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43734/lectures/445666" target="_blank" class="lec-link"><span class="lec-no">12</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画① - プロンプトの基本</span><span class="lec-dur">5:02</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43734/lectures/445667" target="_blank" class="lec-link"><span class="lec-no">13</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画① - 基本的な質問パターン（5W1H・段階的質問）</span><span class="lec-dur">5:48</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43734/lectures/445668" target="_blank" class="lec-link"><span class="lec-no">14</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画② - ロールプレイの活用（専門家として回答させる）</span><span class="lec-dur">5:21</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43734/lectures/445669" target="_blank" class="lec-link"><span class="lec-no">15</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画③ - 文脈設定と制約条件（出力形式・文字数指定）</span><span class="lec-dur">6:04</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43734/lectures/445670" target="_blank" class="lec-link"><span class="lec-no">16</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画④ - プロンプトの反復改善テクニック</span><span class="lec-dur">5:48</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43734/lectures/445671" target="_blank" class="lec-link"><span class="lec-no">17</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画⑤ - 自己改善プロンプト</span><span class="lec-dur">5:32</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43734/lectures/445672" target="_blank" class="lec-link"><span class="lec-no">18</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画⑥ - フレームワーク活用（MECE／SWOT／PREP）</span><span class="lec-dur">6:39</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43734/lectures/447303" target="_blank" class="lec-link"><span class="lec-no">19</span><span class="lec-type"><span class="type-pill test">テスト</span></span><span class="lec-title">★テスト：プロンプトと会話設計</span><span class="lec-dur"></span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+    </div>
+  </div>
+
+  <!-- 3. Copilot文書作成入門 -->
+  <div class="course-card">
+    <div class="card-top">
+      <div class="thumb-wrap">
+        <a href="https://hojin-reskilling.share-wis.com/courses/43750/lectures/445673" target="_blank">
+          <img src="images/course-03.jpg" alt="Copilot文書作成入門">
+        </a>
+      </div>
+      <div class="card-info">
+        <div class="card-info-top">
+          <span class="course-num">3</span>
+          <span class="course-title">Copilot文書作成入門（初級）</span>
+        </div>
+        <div class="card-meta">
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-11v4l3.5 2.1.8-1.3-2.8-1.7V7H9z"/></svg>約58分</span>
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm1 2h4v4H5V6z"/></svg>動画9本 + テスト1回</span>
+        </div>
+        <span class="plan-tag free">無償版</span>
+      </div>
+    </div>
+    <div class="lectures-wrap">
+      <div class="section-label">文書生成</div>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43750/lectures/445673" target="_blank" class="lec-link"><span class="lec-no">20</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画① - 文書作成の基本</span><span class="lec-dur">6:04</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43750/lectures/445674" target="_blank" class="lec-link"><span class="lec-no">21</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画① - 文章の推敲・校正</span><span class="lec-dur">6:13</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43750/lectures/445681" target="_blank" class="lec-link"><span class="lec-no">22</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画② - 提案書・企画書の作成</span><span class="lec-dur">7:54</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43750/lectures/445682" target="_blank" class="lec-link"><span class="lec-no">23</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画③ - 議事録の自動生成</span><span class="lec-dur">6:24</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43750/lectures/445689" target="_blank" class="lec-link"><span class="lec-no">24</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画④ - メール文章の作成</span><span class="lec-dur">6:50</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43750/lectures/445690" target="_blank" class="lec-link"><span class="lec-no">25</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画⑤ - 業務マニュアル・手順書の作成</span><span class="lec-dur">6:34</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43750/lectures/445694" target="_blank" class="lec-link"><span class="lec-no">26</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画⑥ - プレゼン資料のスクリプト作成</span><span class="lec-dur">6:46</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43750/lectures/445697" target="_blank" class="lec-link"><span class="lec-no">27</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画⑦ - SNS投稿・ブログ記事の作成</span><span class="lec-dur">6:37</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43750/lectures/445698" target="_blank" class="lec-link"><span class="lec-no">28</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画⑧ - コードをビジュアル化して書き出す</span><span class="lec-dur">4:49</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43750/lectures/447304" target="_blank" class="lec-link"><span class="lec-no">29</span><span class="lec-type"><span class="type-pill test">テスト</span></span><span class="lec-title">★テスト：文書生成</span><span class="lec-dur"></span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+    </div>
+  </div>
+
+  <!-- ===== 中級 ===== -->
+  <div class="level-header">
+    <div class="level-icon intermediate">中</div>
+    <div class="level-text">
+      <h2>中級コース</h2>
+      <p>ビジュアル・データ活用・リサーチ・M365連携を学ぶ 4コース</p>
+    </div>
+  </div>
+
+  <!-- 4. Copilotビジュアル制作 -->
+  <div class="course-card">
+    <div class="card-top">
+      <div class="thumb-wrap">
+        <a href="https://hojin-reskilling.share-wis.com/courses/43751/lectures/445699" target="_blank">
+          <img src="images/course-04.jpg" alt="Copilotビジュアル制作">
+        </a>
+      </div>
+      <div class="card-info">
+        <div class="card-info-top">
+          <span class="course-num">4</span>
+          <span class="course-title">Copilotビジュアル制作（中級）</span>
+        </div>
+        <div class="card-meta">
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-11v4l3.5 2.1.8-1.3-2.8-1.7V7H9z"/></svg>約34分</span>
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm1 2h4v4H5V6z"/></svg>動画5本 + テスト1回</span>
+        </div>
+        <span class="plan-tag free">無償版</span>
+      </div>
+    </div>
+    <div class="lectures-wrap">
+      <div class="section-label">画像生成機能</div>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43751/lectures/445699" target="_blank" class="lec-link"><span class="lec-no">30</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画① - Copilotの画像生成とは</span><span class="lec-dur">6:29</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43751/lectures/445706" target="_blank" class="lec-link"><span class="lec-no">31</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画① - 基本的な画像生成</span><span class="lec-dur">6:41</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43751/lectures/445707" target="_blank" class="lec-link"><span class="lec-no">32</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画② - プレゼン資料用画像の作成</span><span class="lec-dur">6:38</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43751/lectures/445708" target="_blank" class="lec-link"><span class="lec-no">33</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画③ - 画像編集と修正依頼</span><span class="lec-dur">6:08</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43751/lectures/445712" target="_blank" class="lec-link"><span class="lec-no">34</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画④ - SNS/広告素材の作成</span><span class="lec-dur">7:54</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43751/lectures/447305" target="_blank" class="lec-link"><span class="lec-no">35</span><span class="lec-type"><span class="type-pill test">テスト</span></span><span class="lec-title">★テスト：画像生成機能</span><span class="lec-dur"></span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+    </div>
+  </div>
+
+  <!-- 5. Copilotデータ活用 -->
+  <div class="course-card">
+    <div class="card-top">
+      <div class="thumb-wrap">
+        <a href="https://hojin-reskilling.share-wis.com/courses/43754/lectures/445714" target="_blank">
+          <img src="images/course-05.jpg" alt="Copilotデータ活用">
+        </a>
+      </div>
+      <div class="card-info">
+        <div class="card-info-top">
+          <span class="course-num">5</span>
+          <span class="course-title">Copilotデータ活用（中級）</span>
+        </div>
+        <div class="card-meta">
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-11v4l3.5 2.1.8-1.3-2.8-1.7V7H9z"/></svg>約23分</span>
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm1 2h4v4H5V6z"/></svg>動画4本 + テスト1回</span>
+        </div>
+        <span class="plan-tag free">無償版</span>
+      </div>
+    </div>
+    <div class="lectures-wrap">
+      <div class="section-label">ファイル活用とデータ分析</div>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43754/lectures/445714" target="_blank" class="lec-link"><span class="lec-no">36</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画① - ファイル分析機能</span><span class="lec-dur">6:11</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43754/lectures/445715" target="_blank" class="lec-link"><span class="lec-no">37</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画① - ファイルアップロードと基本操作</span><span class="lec-dur">5:06</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43754/lectures/445716" target="_blank" class="lec-link"><span class="lec-no">38</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画② - Excel処理（集計・ピボット・数式）</span><span class="lec-dur">5:38</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43754/lectures/445717" target="_blank" class="lec-link"><span class="lec-no">39</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画③ - 画像からのデータ抽出（OCR活用）</span><span class="lec-dur">5:38</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43754/lectures/447306" target="_blank" class="lec-link"><span class="lec-no">40</span><span class="lec-type"><span class="type-pill test">テスト</span></span><span class="lec-title">★テスト：ファイル活用とデータ分析</span><span class="lec-dur"></span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+    </div>
+  </div>
+
+  <!-- 6. Copilotリサーチ実践 -->
+  <div class="course-card">
+    <div class="card-top">
+      <div class="thumb-wrap">
+        <a href="https://hojin-reskilling.share-wis.com/courses/43755/lectures/445720" target="_blank">
+          <img src="images/course-06.jpg" alt="Copilotリサーチ実践">
+        </a>
+      </div>
+      <div class="card-info">
+        <div class="card-info-top">
+          <span class="course-num">6</span>
+          <span class="course-title">Copilotリサーチ実践（中級）</span>
+        </div>
+        <div class="card-meta">
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-11v4l3.5 2.1.8-1.3-2.8-1.7V7H9z"/></svg>約24分</span>
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm1 2h4v4H5V6z"/></svg>動画4本 + テスト1回</span>
+        </div>
+        <span class="plan-tag mixed">無償版 + 有償版</span>
+      </div>
+    </div>
+    <div class="notice-banner paid-partial">
+      <span class="notice-icon">!</span>
+      <span>このコースには有償版専用コンテンツが含まれます</span>
+    </div>
+    <div class="lectures-wrap">
+      <div class="section-label">Web検索とリサーチ</div>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43755/lectures/445720" target="_blank" class="lec-link"><span class="lec-no">41</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画① - Web検索機能</span><span class="lec-dur">5:50</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43755/lectures/445721" target="_blank" class="lec-link"><span class="lec-no">42</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画① - 基本的なWeb検索</span><span class="lec-dur">7:10</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43755/lectures/445722" target="_blank" class="lec-link"><span class="lec-no">43</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画② - Researcherとは</span><span class="lec-dur">5:02</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43755/lectures/445723" target="_blank" class="lec-link"><span class="lec-no">44</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画② - Researcherで情報収集</span><span class="lec-dur">5:50</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43755/lectures/447307" target="_blank" class="lec-link"><span class="lec-no">45</span><span class="lec-type"><span class="type-pill test">テスト</span></span><span class="lec-title">★テスト：Web検索とリサーチ</span><span class="lec-dur"></span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+    </div>
+  </div>
+
+  <!-- 7. Copilot M365連携 -->
+  <div class="course-card">
+    <div class="card-top">
+      <div class="thumb-wrap">
+        <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445725" target="_blank">
+          <img src="images/course-07.jpg" alt="Copilot M365連携">
+        </a>
+      </div>
+      <div class="card-info">
+        <div class="card-info-top">
+          <span class="course-num">7</span>
+          <span class="course-title">Copilot M365連携（中級）</span>
+        </div>
+        <div class="card-meta">
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-11v4l3.5 2.1.8-1.3-2.8-1.7V7H9z"/></svg>約3時間10分</span>
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm1 2h4v4H5V6z"/></svg>動画27本 + テスト7回</span>
+        </div>
+        <span class="plan-tag paid">有償版</span>
+      </div>
+    </div>
+    <div class="notice-banner paid-all">
+      <span class="notice-icon">!</span>
+      <span>すべて有償版向けコンテンツです</span>
+    </div>
+    <div class="lectures-wrap">
+      <div class="section-label">Word × Copilot</div>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445725" target="_blank" class="lec-link"><span class="lec-no">46</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画① - Copilot in Wordの基本</span><span class="lec-dur">7:15</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445726" target="_blank" class="lec-link"><span class="lec-no">47</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画① - 文書の構成提案</span><span class="lec-dur">5:06</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445727" target="_blank" class="lec-link"><span class="lec-no">48</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画② - 既存文書の改善</span><span class="lec-dur">4:51</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445728" target="_blank" class="lec-link"><span class="lec-no">49</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画③ - 文書校正とレビュー</span><span class="lec-dur">5:22</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/447316" target="_blank" class="lec-link"><span class="lec-no">50</span><span class="lec-type"><span class="type-pill test">テスト</span></span><span class="lec-title">★テスト：Word × Copilot</span><span class="lec-dur"></span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+
+      <div class="section-label">Excel × Copilot</div>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445729" target="_blank" class="lec-link"><span class="lec-no">51</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画① - Copilot in Excelの基本</span><span class="lec-dur">5:00</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445730" target="_blank" class="lec-link"><span class="lec-no">52</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画① - データ分析と可視化</span><span class="lec-dur">7:04</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445732" target="_blank" class="lec-link"><span class="lec-no">53</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画② - 列追加・数式生成</span><span class="lec-dur">6:37</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445733" target="_blank" class="lec-link"><span class="lec-no">54</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画③ - インサイト抽出</span><span class="lec-dur">5:46</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445734" target="_blank" class="lec-link"><span class="lec-no">55</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画④ - Excel Labsアドインの活用</span><span class="lec-dur">6:34</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/447317" target="_blank" class="lec-link"><span class="lec-no">56</span><span class="lec-type"><span class="type-pill test">テスト</span></span><span class="lec-title">★テスト：Excel × Copilot</span><span class="lec-dur"></span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+
+      <div class="section-label">PowerPoint × Copilot</div>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445735" target="_blank" class="lec-link"><span class="lec-no">57</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画① - Copilot in PowerPointの基本</span><span class="lec-dur">6:27</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445737" target="_blank" class="lec-link"><span class="lec-no">58</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画① - 文書から資料作成</span><span class="lec-dur">5:58</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445738" target="_blank" class="lec-link"><span class="lec-no">59</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画② - ファイルから資料作成</span><span class="lec-dur">4:59</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445740" target="_blank" class="lec-link"><span class="lec-no">60</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画③ - 資料の編集と修正</span><span class="lec-dur">5:09</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445741" target="_blank" class="lec-link"><span class="lec-no">61</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画④ - 画像生成とデザイン</span><span class="lec-dur">4:26</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/447318" target="_blank" class="lec-link"><span class="lec-no">62</span><span class="lec-type"><span class="type-pill test">テスト</span></span><span class="lec-title">★テスト：PowerPoint × Copilot</span><span class="lec-dur"></span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+
+      <div class="section-label">Teams × Copilot</div>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445746" target="_blank" class="lec-link"><span class="lec-no">63</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画① - Copilot in Teamsの基本</span><span class="lec-dur">7:52</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445747" target="_blank" class="lec-link"><span class="lec-no">64</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画① - 会議のリアルタイム要約</span><span class="lec-dur">4:28</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445748" target="_blank" class="lec-link"><span class="lec-no">65</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画② - 会議後サマリー</span><span class="lec-dur">3:36</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/447319" target="_blank" class="lec-link"><span class="lec-no">66</span><span class="lec-type"><span class="type-pill test">テスト</span></span><span class="lec-title">★テスト：Teams × Copilot</span><span class="lec-dur"></span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+
+      <div class="section-label">Outlook × Copilot</div>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445753" target="_blank" class="lec-link"><span class="lec-no">67</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画① - Copilot in Outlookの基本</span><span class="lec-dur">7:56</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445754" target="_blank" class="lec-link"><span class="lec-no">68</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画① - メール作成と返信</span><span class="lec-dur">6:58</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445755" target="_blank" class="lec-link"><span class="lec-no">69</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画② - 要約と優先度整理</span><span class="lec-dur">2:52</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/447320" target="_blank" class="lec-link"><span class="lec-no">70</span><span class="lec-type"><span class="type-pill test">テスト</span></span><span class="lec-title">★テスト：Outlook × Copilot</span><span class="lec-dur"></span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+
+      <div class="section-label">OneDrive/SharePoint</div>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445756" target="_blank" class="lec-link"><span class="lec-no">71</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画① - クラウド資料管理</span><span class="lec-dur">4:09</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445757" target="_blank" class="lec-link"><span class="lec-no">72</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画① - ファイル検索と要約</span><span class="lec-dur">3:44</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445758" target="_blank" class="lec-link"><span class="lec-no">73</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画② - 複数ファイル比較</span><span class="lec-dur">4:23</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445760" target="_blank" class="lec-link"><span class="lec-no">74</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画③ - プロジェクト資料の自動整理提案</span><span class="lec-dur">5:16</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/447321" target="_blank" class="lec-link"><span class="lec-no">75</span><span class="lec-type"><span class="type-pill test">テスト</span></span><span class="lec-title">★テスト：OneDrive/SharePoint</span><span class="lec-dur"></span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+
+      <div class="section-label">OneNote × Copilot</div>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445761" target="_blank" class="lec-link"><span class="lec-no">76</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画① - OneNote活用</span><span class="lec-dur">4:59</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445762" target="_blank" class="lec-link"><span class="lec-no">77</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画① - ノート要約</span><span class="lec-dur">3:42</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445765" target="_blank" class="lec-link"><span class="lec-no">78</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画② - 構造化と整理</span><span class="lec-dur">4:19</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/445766" target="_blank" class="lec-link"><span class="lec-no">79</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画③ - アイデア整理・思考マップ作成</span><span class="lec-dur">5:31</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43758/lectures/447322" target="_blank" class="lec-link"><span class="lec-no">80</span><span class="lec-type"><span class="type-pill test">テスト</span></span><span class="lec-title">★テスト：OneNote × Copilot</span><span class="lec-dur"></span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+    </div>
+  </div>
+
+  <!-- ===== 上級 ===== -->
+  <div class="level-header">
+    <div class="level-icon advanced">上</div>
+    <div class="level-text">
+      <h2>上級コース</h2>
+      <p>ノートブック・エージェント・Copilot Studioを学ぶ 3コース</p>
+    </div>
+  </div>
+
+  <!-- 8. Copilotノートブック活用 -->
+  <div class="course-card">
+    <div class="card-top">
+      <div class="thumb-wrap">
+        <a href="https://hojin-reskilling.share-wis.com/courses/43760/lectures/445769" target="_blank">
+          <img src="images/course-08.jpg" alt="Copilotノートブック活用">
+        </a>
+      </div>
+      <div class="card-info">
+        <div class="card-info-top">
+          <span class="course-num">8</span>
+          <span class="course-title">Copilotノートブック活用（上級）</span>
+        </div>
+        <div class="card-meta">
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-11v4l3.5 2.1.8-1.3-2.8-1.7V7H9z"/></svg>約22分</span>
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm1 2h4v4H5V6z"/></svg>動画4本 + テスト1回</span>
+        </div>
+        <span class="plan-tag paid">有償版</span>
+      </div>
+    </div>
+    <div class="notice-banner paid-all">
+      <span class="notice-icon">!</span>
+      <span>すべて有償版向けコンテンツです</span>
+    </div>
+    <div class="lectures-wrap">
+      <div class="section-label">ノートブックの活用</div>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43760/lectures/445769" target="_blank" class="lec-link"><span class="lec-no">81</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画① - ノートブックの基本</span><span class="lec-dur">5:15</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43760/lectures/445770" target="_blank" class="lec-link"><span class="lec-no">82</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画② - ノートブックの実務活用</span><span class="lec-dur">5:56</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43760/lectures/445771" target="_blank" class="lec-link"><span class="lec-no">83</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画① - 基本操作と質問応答</span><span class="lec-dur">5:44</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43760/lectures/445772" target="_blank" class="lec-link"><span class="lec-no">84</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画② - ノートブックで音声解説を作成する</span><span class="lec-dur">5:28</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43760/lectures/447329" target="_blank" class="lec-link"><span class="lec-no">85</span><span class="lec-type"><span class="type-pill test">テスト</span></span><span class="lec-title">★テスト：ノートブックの活用</span><span class="lec-dur"></span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+    </div>
+  </div>
+
+  <!-- 9. Copilotエージェント活用 -->
+  <div class="course-card">
+    <div class="card-top">
+      <div class="thumb-wrap">
+        <a href="https://hojin-reskilling.share-wis.com/courses/43761/lectures/445774" target="_blank">
+          <img src="images/course-09.jpg" alt="Copilotエージェント活用">
+        </a>
+      </div>
+      <div class="card-info">
+        <div class="card-info-top">
+          <span class="course-num">9</span>
+          <span class="course-title">Copilotエージェント活用（上級）</span>
+        </div>
+        <div class="card-meta">
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-11v4l3.5 2.1.8-1.3-2.8-1.7V7H9z"/></svg>約11分</span>
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm1 2h4v4H5V6z"/></svg>動画2本 + テスト1回</span>
+        </div>
+        <span class="plan-tag paid">有償版</span>
+      </div>
+    </div>
+    <div class="notice-banner paid-all">
+      <span class="notice-icon">!</span>
+      <span>すべて有償版向けコンテンツです</span>
+    </div>
+    <div class="lectures-wrap">
+      <div class="section-label">エージェント機能（上級）</div>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43761/lectures/445774" target="_blank" class="lec-link"><span class="lec-no">86</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画② - Analystとは</span><span class="lec-dur">6:13</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43761/lectures/445776" target="_blank" class="lec-link"><span class="lec-no">87</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画① - Analystでデータ分析</span><span class="lec-dur">4:44</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43761/lectures/447331" target="_blank" class="lec-link"><span class="lec-no">88</span><span class="lec-type"><span class="type-pill test">テスト</span></span><span class="lec-title">★テスト：エージェント機能</span><span class="lec-dur"></span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+    </div>
+  </div>
+
+  <!-- 10. Copilot Studio活用 -->
+  <div class="course-card">
+    <div class="card-top">
+      <div class="thumb-wrap">
+        <a href="https://hojin-reskilling.share-wis.com/courses/43762/lectures/445779" target="_blank">
+          <img src="images/course-10.jpg" alt="Copilot Studio活用">
+        </a>
+      </div>
+      <div class="card-info">
+        <div class="card-info-top">
+          <span class="course-num">10</span>
+          <span class="course-title">Copilot Studio活用（上級）</span>
+        </div>
+        <div class="card-meta">
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-11v4l3.5 2.1.8-1.3-2.8-1.7V7H9z"/></svg>約28分</span>
+          <span class="meta-chip"><svg viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm1 2h4v4H5V6z"/></svg>動画4本 + テスト1回</span>
+        </div>
+        <span class="plan-tag mixed">無償版 + 有償版</span>
+      </div>
+    </div>
+    <div class="notice-banner paid-partial">
+      <span class="notice-icon">!</span>
+      <span>このコースには有償版専用コンテンツが含まれます</span>
+    </div>
+    <div class="lectures-wrap">
+      <div class="section-label">Copilot Studio（上級）</div>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43762/lectures/445779" target="_blank" class="lec-link"><span class="lec-no">89</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">概要動画① - Copilot Studioとは</span><span class="lec-dur">8:31</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43762/lectures/445781" target="_blank" class="lec-link"><span class="lec-no">90</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画① - エージェント新規作成<span class="lec-note">※ファイルアップする場合は有償版ですが、無償版でもエージェント作成は可能なため、ご視聴ください。</span></span><span class="lec-dur">6:35</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43762/lectures/445783" target="_blank" class="lec-link"><span class="lec-no">91</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画② - 対話型ヒアリングチャットボット</span><span class="lec-dur">6:08</span><span class="lec-plan"><span class="micro-badge free">無償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43762/lectures/445784" target="_blank" class="lec-link"><span class="lec-no">92</span><span class="lec-type"><span class="type-pill video">動画</span></span><span class="lec-title">デモ動画③ - Copilot Studioの基本操作について</span><span class="lec-dur">6:55</span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+      <a href="https://hojin-reskilling.share-wis.com/courses/43762/lectures/447333" target="_blank" class="lec-link"><span class="lec-no">93</span><span class="lec-type"><span class="type-pill test">テスト</span></span><span class="lec-title">★テスト：Copilot Studio</span><span class="lec-dur"></span><span class="lec-plan"><span class="micro-badge paid">有償版</span></span></a>
+    </div>
+  </div>
+
+</div>
+
+<!-- フッター -->
+<div class="footer">
+  <div class="footer-thanks">ご視聴ありがとうございました。</div>
+  <p class="footer-copy">Microsoft Copilot 講座カタログ &copy; DigiRise</p>
+</div>
+
+</body>
+</html>
